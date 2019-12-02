@@ -1,5 +1,6 @@
-import 'package:eagle/ReadText.dart';
+import 'ReadText.dart';
 import 'package:flutter/material.dart';
+import 'SpeakText.dart';
 
 class LocationsPage extends StatefulWidget {
   final PageController controller;
@@ -28,6 +29,7 @@ class _LocationsPageState extends State<LocationsPage> {
     'assets/images/classroom4.jpg'
   ];
   var readText = ReadText();
+  var speakText = SpeakText();
 
   _LocationsPageState(this.controller);
 
@@ -35,6 +37,15 @@ class _LocationsPageState extends State<LocationsPage> {
   initState() {
     super.initState();
     readText.initTts();
+    speakText.initSpeechRecognizer();
+    speakText.speechRecognition.setRecognitionCompleteHandler(
+          () => this.printFinalText(),
+    );
+  }
+
+  void printFinalText() {
+    speakText.setListening(false);
+    print("Final text executed is " + speakText.resultText);
   }
 
   @override
@@ -117,6 +128,9 @@ class _LocationsPageState extends State<LocationsPage> {
                       child: Text('Speech to text'),
                       onPressed: () {
                         print("Speech to text");
+                        speakText.speechRecognition
+                            .listen(locale: "en_US")
+                            .then((result) => {});
                       },
                     ),
                   ),
@@ -128,9 +142,7 @@ class _LocationsPageState extends State<LocationsPage> {
                       onPressed: () {
                         print("Text to speech");
                         readText.speak("Enter text here.");
-                        setState(() {
-
-                        });
+                        setState(() {});
                       },
                     ),
                   )

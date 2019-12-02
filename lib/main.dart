@@ -2,7 +2,6 @@ import 'camera_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'loc_with_speech.dart';
-import 'speak_text.dart';
 import 'contact_page.dart';
 import 'locations_page.dart';
 import 'maps_page.dart';
@@ -47,7 +46,6 @@ class _MyHomePageState extends State<MyHomePage> {
         controller: controller,
         children: [
           ContactPage(),
-          SpeakText(),
           LocWithSpeech(),
           LocationsPage(controller: controller),
           MapsPage(),
