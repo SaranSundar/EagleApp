@@ -10,9 +10,6 @@ class ReadText {
   dynamic voices;
   String language;
   String voice;
-  int silencems;
-
-  String _newVoiceText;
 
   TtsState ttsState = TtsState.stopped;
 
@@ -56,13 +53,9 @@ class ReadText {
     voices = await flutterTts.getVoices;
   }
 
-  Future speak() async {
-    if (_newVoiceText != null) {
-      if (_newVoiceText.isNotEmpty) {
-        var result = await flutterTts.speak("Hello test text");
-        if (result == 1) ttsState = TtsState.playing;
-      }
-    }
+  Future speak(textToSpeech) async {
+    var result = await flutterTts.speak(textToSpeech);
+    if (result == 1) ttsState = TtsState.playing;
   }
 
   Future stop() async {

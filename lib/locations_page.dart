@@ -127,8 +127,10 @@ class _LocationsPageState extends State<LocationsPage> {
                       child: Text('Text to speech'),
                       onPressed: () {
                         print("Text to speech");
-                        readText.speak();
-                        setState(() {});
+                        readText.speak("Enter text here.");
+                        setState(() {
+
+                        });
                       },
                     ),
                   )
