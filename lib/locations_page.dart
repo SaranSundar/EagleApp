@@ -68,6 +68,9 @@ class _LocationsPageState extends State<LocationsPage> {
         readText.speak("Loading Contacts");
 
         controller.jumpToPage(0);
+      } else if (userQuery.contains("location")) {
+        readText.speak("Loading Locations Page");
+        controller.jumpToPage(1);
       } else {
         readText.speak(
             "Sorry, I could not understand. Please say something like go to english class or go to history class.");
@@ -78,7 +81,7 @@ class _LocationsPageState extends State<LocationsPage> {
       controller.jumpToPage(0);
     } else {
       readText.speak(
-          "Sorry I could not understand your command. Please say something like read all locations or go to english class or go to contacts or go to camera");
+          "Sorry I could not understand your command. Please say something like reed all locations or go to english class or go to contacts or go to camera");
     }
     setState(() {});
   }
