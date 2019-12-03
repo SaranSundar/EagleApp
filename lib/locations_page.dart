@@ -15,21 +15,18 @@ class _LocationsPageState extends State<LocationsPage> {
   static const _kDuration = const Duration(milliseconds: 300);
   static const _kCurve = Curves.ease;
   final PageController controller;
-  var roomNames = ["Classroom A", "Classroom B", "Classroom C", "Classroom D"];
-  var roomLocations = [
-    "ECSS Floor 2, Room 2.12",
-    "ECSN Floor 3, Room 3.41",
-    "CB Floor 1, Room 1.04",
-    "ECSW Floor 1, Room 1.18"
-  ];
+  var roomNames = ["English Class", "History Class"];
+  var roomLocations = ["ECSS Floor 2, Room 2.12", "ECSS Floor 1, Room 1.18"];
   var roomImages = [
     'assets/images/classroom1.jpg',
-    'assets/images/classroom2.jpg',
-    'assets/images/classroom3.jpg',
     'assets/images/classroom4.jpg'
   ];
   var readText = ReadText();
   var speakText = SpeakText();
+
+  var locationsText = "You have 2 available locations." +
+      "The first location is English Class on Floor 2 in Room 2.12." +
+      "The second location is History Class on Floor 1 in Room 1.18. Where would you like to go?";
 
   _LocationsPageState(this.controller);
 
@@ -39,13 +36,36 @@ class _LocationsPageState extends State<LocationsPage> {
     readText.initTts();
     speakText.initSpeechRecognizer();
     speakText.speechRecognition.setRecognitionCompleteHandler(
-          () => this.printFinalText(),
+      () => this.printFinalText(),
     );
   }
 
   void printFinalText() {
     speakText.setListening(false);
-    print("Final text executed is " + speakText.resultText);
+    var userQuery = speakText.resultText;
+    if ((userQuery.contains("read") || userQuery.contains("list")) &&
+        userQuery.contains("location")) {
+      print("Reading all locations");
+      readText.speak(locationsText);
+    } else if (userQuery.contains("go") ||
+        userQuery.contains("to") ||
+        userQuery.contains("direction")) {
+      print("Going to location");
+      if (userQuery.contains("english")) {
+        readText.speak("Loading directions for English Class");
+        // Navigate to map
+      } else if (userQuery.contains("history")) {
+        // navigate to map
+        readText.speak("Loading directions for English Class");
+      } else {
+        readText.speak(
+            "Sorry, I could not understand. Please say something like go to english class or go to history class.");
+      }
+    } else {
+      readText.speak(
+          "Sorry I could not understand your command. Please say something like read all locations or go to english class");
+    }
+    setState(() {});
   }
 
   @override
@@ -65,7 +85,7 @@ class _LocationsPageState extends State<LocationsPage> {
               child: Container(
                 child: ListView.builder(
                     padding: const EdgeInsets.all(4),
-                    itemCount: 4,
+                    itemCount: 2,
                     itemBuilder: (BuildContext context, int index) {
                       return new GestureDetector(
                           onTap: () {
@@ -125,8 +145,10 @@ class _LocationsPageState extends State<LocationsPage> {
                     width: _size.width * 0.5,
                     height: double.infinity,
                     child: RaisedButton(
+                      color: Colors.red,
                       child: Text('Speech to text'),
                       onPressed: () {
+                        readText.stop();
                         print("Speech to text");
                         speakText.speechRecognition
                             .listen(locale: "en_US")
@@ -138,10 +160,11 @@ class _LocationsPageState extends State<LocationsPage> {
                     width: _size.width * 0.5,
                     height: double.infinity,
                     child: RaisedButton(
+                      color: Colors.green,
                       child: Text('Text to speech'),
                       onPressed: () {
                         print("Text to speech");
-                        readText.speak("Enter text here.");
+                        readText.speak(locationsText);
                         setState(() {});
                       },
                     ),
