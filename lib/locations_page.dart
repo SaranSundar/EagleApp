@@ -78,7 +78,7 @@ class _LocationsPageState extends State<LocationsPage> {
       controller.jumpToPage(0);
     } else {
       readText.speak(
-          "Sorry I could not understand your command. Please say something like read all locations or go to english class");
+          "Sorry I could not understand your command. Please say something like read all locations or go to english class or go to contacts or go to camera");
     }
     setState(() {});
   }
