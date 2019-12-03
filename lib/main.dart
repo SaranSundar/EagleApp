@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: PageView(
         controller: controller,
         children: [
-          ContactPage(),
+          ContactPage(controller: controller),
           LocationsPage(controller: controller),
           MapsPage(),
           CameraApp(),

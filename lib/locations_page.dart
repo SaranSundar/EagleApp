@@ -78,7 +78,7 @@ class _LocationsPageState extends State<LocationsPage> {
       controller.jumpToPage(0);
     } else {
       readText.speak(
-          "Sorry I could not understand your command. Please say something like read all locations or go to english class or go to contacts or go to camera");
+          "Sorry I could not understand your command. Please say something like reed all locations or go to english class or go to contacts or go to camera");
     }
     setState(() {});
   }
@@ -161,7 +161,7 @@ class _LocationsPageState extends State<LocationsPage> {
                     height: double.infinity,
                     child: RaisedButton(
                       color: Colors.red,
-                      child: Text('Speech to text'),
+                      child: Text('Voice Commands'),
                       onPressed: () {
                         readText.stop();
                         print("Speech to text");
@@ -176,7 +176,7 @@ class _LocationsPageState extends State<LocationsPage> {
                     height: double.infinity,
                     child: RaisedButton(
                       color: Colors.green,
-                      child: Text('Text to speech'),
+                      child: Text('Read Locations'),
                       onPressed: () {
                         print("Text to speech");
                         readText.speak(locationsText);
