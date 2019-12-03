@@ -42,7 +42,9 @@ class _LocationsPageState extends State<LocationsPage> {
 
   void printFinalText() {
     speakText.setListening(false);
-    var userQuery = speakText.resultText;
+    var userQuery = speakText.resultText.toLowerCase();
+
+    print("User said: " + userQuery);
     if ((userQuery.contains("read") || userQuery.contains("list")) &&
         userQuery.contains("location")) {
       print("Reading all locations");
@@ -53,14 +55,27 @@ class _LocationsPageState extends State<LocationsPage> {
       print("Going to location");
       if (userQuery.contains("english")) {
         readText.speak("Loading directions for English Class");
-        // Navigate to map
+        controller.jumpToPage(2);
       } else if (userQuery.contains("history")) {
-        // navigate to map
-        readText.speak("Loading directions for English Class");
+        readText.speak("Loading directions for History Class");
+
+        controller.jumpToPage(2);
+      } else if (userQuery.contains("camera")) {
+        readText.speak("Loading Object Recognition Software");
+
+        controller.jumpToPage(3);
+      } else if (userQuery.contains("contacts")) {
+        readText.speak("Loading Contacts");
+
+        controller.jumpToPage(0);
       } else {
         readText.speak(
             "Sorry, I could not understand. Please say something like go to english class or go to history class.");
       }
+    } else if (userQuery.contains("call")) {
+      readText.speak("Loading Contacts");
+
+      controller.jumpToPage(0);
     } else {
       readText.speak(
           "Sorry I could not understand your command. Please say something like read all locations or go to english class");
